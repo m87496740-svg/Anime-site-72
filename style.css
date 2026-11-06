@@ -1,0 +1,537 @@
+:root {
+  --bg: #08090d;
+  --surface: #12151e;
+  --surface-border: #1f2536;
+  --accent: #00f2fe;
+  --accent-glow: rgba(0, 242, 254, 0.4);
+  --text-main: #ffffff;
+  --text-muted: #8e9bb0;
+  --danger: #ff4757;
+}
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+}
+
+body { 
+  background-color: var(--bg); 
+  color: var(--text-main); 
+  padding-bottom: 60px; 
+}
+
+/* Top Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(18, 21, 30, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.brand { 
+  font-size: 1.15rem; 
+  font-weight: 800; 
+  letter-spacing: 1.5px; 
+  color: var(--accent); 
+}
+
+/* Owner Logo Button (Perfect Circular Border & Neon Cyan Glow) */
+.owner-logo-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.8px solid var(--accent);
+  background: #000;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.45), inset 0 0 6px rgba(0, 242, 254, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.owner-logo-btn:active { 
+  transform: scale(0.92); 
+  box-shadow: 0 0 16px rgba(0, 242, 254, 0.85);
+}
+
+/* Logo Image Perfect Fit Inside Circle */
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  display: block;
+}
+
+.container { 
+  max-width: 950px; 
+  margin: 0 auto; 
+  padding: 14px; 
+}
+
+/* Cinema Player Container */
+.player-container {
+  display: none;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 1px solid rgba(0, 242, 254, 0.35);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+}
+
+.video-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.media-host {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #000;
+}
+
+.media-host video,
+.media-host iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #000;
+  object-fit: contain;
+}
+
+/* Video Screen Right-Most Compact Overlay Buttons */
+.video-overlay-bar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  gap: 8px;
+  z-index: 2147483647 !important;
+  pointer-events: auto;
+}
+
+.v-btn {
+  background: rgba(10, 12, 18, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--accent);
+  border: 1px solid rgba(0, 242, 254, 0.45);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  touch-action: manipulation;
+}
+
+.v-btn:active {
+  transform: scale(0.85);
+  background: var(--accent);
+  color: #000;
+}
+
+.v-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  pointer-events: none;
+}
+
+/* Player Meta Details */
+.player-meta { 
+  background: var(--surface); 
+  padding: 14px 16px; 
+  border-top: 1px solid var(--surface-border); 
+}
+
+.current-title { 
+  font-size: 1.15rem; 
+  font-weight: 700; 
+}
+
+.current-episode { 
+  font-size: 0.85rem; 
+  color: var(--accent); 
+  margin: 6px 0 14px 0; 
+}
+
+.ep-chips { 
+  display: flex; 
+  gap: 8px; 
+  overflow-x: auto; 
+  padding-bottom: 4px; 
+}
+
+.ep-chip {
+  background: #1b2130;
+  border: 1px solid var(--surface-border);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ep-chip.active { 
+  background: var(--accent); 
+  color: #000; 
+  font-weight: 700; 
+  border-color: var(--accent); 
+}
+
+/* Continue Watching Card Styling */
+.continue-card {
+  background: var(--surface);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.continue-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 4px 18px rgba(0, 242, 254, 0.15);
+}
+
+.continue-card:active {
+  transform: scale(0.98);
+}
+
+.continue-thumb {
+  width: 85px;
+  height: 52px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #090a0f;
+}
+
+.continue-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.continue-info h4 {
+  font-size: 0.9rem;
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.continue-info span {
+  font-size: 0.74rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.continue-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00c6ff, var(--accent));
+  transition: width 0.3s ease;
+}
+
+/* Search Box */
+.search-box { 
+  margin-bottom: 22px; 
+}
+
+.search-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  padding: 12px 18px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.search-input:focus { 
+  border-color: var(--accent); 
+}
+
+/* Catalog Grid */
+.catalog-heading { 
+  font-size: 0.95rem; 
+  font-weight: 700; 
+  margin-bottom: 14px; 
+  color: var(--text-muted); 
+}
+
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (min-width: 600px) {
+  .anime-grid { 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 16px; 
+  }
+}
+
+.anime-card {
+  background: var(--surface);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid var(--surface-border);
+  transition: transform 0.2s;
+}
+
+.anime-card:active { 
+  transform: scale(0.97); 
+}
+
+.poster-wrap { 
+  position: relative; 
+  width: 100%; 
+  padding-top: 140%; 
+  background: #151822; 
+}
+
+.poster-wrap img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge-tamil {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.85);
+  color: var(--accent);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--accent);
+}
+
+.card-meta { 
+  padding: 10px; 
+  text-align: center; 
+}
+
+.card-meta h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.genre-tag { 
+  font-size: 0.7rem; 
+  color: var(--text-muted); 
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 10000;
+}
+
+.modal-box {
+  background: var(--surface);
+  width: 100%;
+  max-width: 440px;
+  border-radius: 14px;
+  border: 1px solid var(--accent);
+  padding: 20px;
+}
+
+.master-box { 
+  max-height: 85vh; 
+  overflow-y: auto; 
+}
+
+.modal-box h2 { 
+  font-size: 1.15rem; 
+  color: var(--accent); 
+  margin-bottom: 16px; 
+  text-align: center; 
+}
+
+.form-group { 
+  margin-bottom: 12px; 
+}
+
+.form-group label { 
+  display: block; 
+  font-size: 0.75rem; 
+  color: var(--text-muted); 
+  margin-bottom: 4px; 
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  background: #090a0f;
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  padding: 10px;
+  color: #fff;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.form-group input:focus, .form-group select:focus { 
+  border-color: var(--accent); 
+}
+
+.manage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.manage-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #090a0f;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--surface-border);
+}
+
+.manage-item span {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.btn-delete {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.modal-btns { 
+  display: flex; 
+  gap: 10px; 
+}
+
+.btn-submit { 
+  background: var(--accent); 
+  color: #000; 
+  border: none; 
+  padding: 11px; 
+  border-radius: 8px; 
+  font-weight: 700; 
+  cursor: pointer; 
+}
+
+.btn-cancel { 
+  background: #232936; 
+  color: #fff; 
+  border: none; 
+  padding: 11px; 
+  border-radius: 8px; 
+  cursor: pointer; 
+}
+
+.error-msg { 
+  color: #ff4757; 
+  font-size: 0.75rem; 
+  text-align: center; 
+  margin-top: 8px; 
+  display: none; 
+}
+
+/* Cinema Mode Fullscreen Settings */
+.player-container.cinema-mode {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 2147483646 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: #000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.player-container.cinema-mode .video-viewport {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+}
+
+.player-container.cinema-mode .media-host video,
+.player-container.cinema-mode .media-host iframe {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.player-container.cinema-mode .player-meta {
+  display: none !important;
+}
+
+.player-container.cinema-mode .video-overlay-bar {
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+}
